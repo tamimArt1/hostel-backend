@@ -9,7 +9,7 @@ import Index from './pages/Index';
 import SingleFood from './pages/SingleFood';
 import Edit from './pages/Edit';
 
-const App: FC = () => {
+const App: FC = (): JSX.Element => {
   return (
     <Router>
       <Navbar />

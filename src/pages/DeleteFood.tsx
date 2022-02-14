@@ -1,9 +1,14 @@
-import { FC, useState, useEffect } from 'react';
-import axios from 'axios';
+import { FC, useState, useEffect, ReactElement } from 'react';
+import axios, { AxiosResponse } from 'axios';
 import { Food } from './AllFoods';
 
 interface CardProps {
   info: Food;
+}
+
+interface AxiosType {
+  acknowledged: boolean;
+  deletedCount: number;
 }
 
 const DeleteFood: FC = (): JSX.Element => {
@@ -28,13 +33,15 @@ const DeleteFood: FC = (): JSX.Element => {
   );
 };
 
-const Card: FC<CardProps> = ({ info }): JSX.Element => {
+const Card: FC<CardProps> = ({ info }): ReactElement => {
   const { name, price, _id } = info;
   async function handleClick() {
-    const { data }: any = await axios.delete(
+    const { data }: AxiosResponse<AxiosType> = await axios.delete(
       `http://localhost:5000/api/food/${_id}`
     );
-    alert('deleted');
+    if (data.acknowledged === true) {
+      alert('deleted');
+    }
   }
   return (
     <div className='card'>

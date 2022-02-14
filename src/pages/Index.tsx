@@ -1,5 +1,5 @@
 import { FC, useState, useEffect } from 'react';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Food } from './AllFoods';
 
@@ -13,7 +13,7 @@ const Index: FC = (): JSX.Element => {
 
   useEffect(() => {
     async function fetchFoods() {
-      const { data } = await axios.get(
+      const { data }: AxiosResponse<Food[]> = await axios.get(
         `http://localhost:5000/api/newfoods?skip=${skip}`
       );
       setFoods(data);

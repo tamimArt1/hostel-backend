@@ -1,5 +1,5 @@
-import { FC, useState, useEffect } from 'react';
-import axios from 'axios';
+import { FC, useState, useEffect, ReactElement } from 'react';
+import axios, { AxiosResponse } from 'axios';
 import { Food } from './AllFoods';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,12 +7,14 @@ interface CardProps {
   info: Food;
 }
 
-const EditFood: FC = (): JSX.Element => {
+const EditFood: FC = (): ReactElement => {
   const [foods, setFoods] = useState<Food[]>([]);
 
   useEffect(() => {
     async function fetchFoods() {
-      const { data } = await axios.get('http://localhost:5000/api/foods');
+      const { data }: AxiosResponse<Food[]> = await axios.get(
+        'http://localhost:5000/api/foods'
+      );
       setFoods(data);
     }
     fetchFoods();
@@ -29,7 +31,7 @@ const EditFood: FC = (): JSX.Element => {
   );
 };
 
-const Card: FC<CardProps> = ({ info }): JSX.Element => {
+const Card: FC<CardProps> = ({ info }): ReactElement => {
   const { name, price, _id } = info;
   const navigate = useNavigate();
   async function handleClick() {
